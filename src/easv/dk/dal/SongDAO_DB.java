@@ -45,7 +45,7 @@ public class SongDAO_DB {
     }
 
     public void createSong(Songs song) {
-        String sql = "insert into Songs (title,artist,category,timeof,fileurl) values (?,?,?,?,?)";
+        String sql = "INSERT INTO Songs (title,artist,category,timeof,fileurl) VALUES (?,?,?,?,?)";
 
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement p = con.prepareStatement(sql);
@@ -64,7 +64,7 @@ public class SongDAO_DB {
     }
 
     public void editSong(Songs song) {
-        String sql = "update Songs set title=? , artist=? , category=? , timeof=? , fileurl=? where id=?";
+        String sql = "UPDATE Songs SET title=? , artist=? , category=? , timeof=? , fileurl=? WHERE id=?";
         try (Connection con = databaseConnector.getConnection()) {
             PreparedStatement p = con.prepareStatement(sql);
             p.setString(1, song.getTitle());
@@ -95,4 +95,6 @@ public class SongDAO_DB {
             throwables.printStackTrace();
         }
     }
+
+
 }
