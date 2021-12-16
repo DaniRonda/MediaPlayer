@@ -72,11 +72,11 @@ public class SongEditorMenu {
 
 
         private void setMediaPlayerTime() {
-                mediaPlayer.setOnReady(() -> { //Once the media file is loaded do the following things
+                mediaPlayer.setOnReady(() -> {
                         String averageSeconds = String.format("%1.0f", mediaPlayer.getMedia().getDuration().toSeconds());
-                        int minutes = Integer.parseInt(averageSeconds) / 60; //Gets minutes
-                        int seconds = Integer.parseInt(averageSeconds) % 60; // Gets seconds
-                        if (10 > seconds) { // If the value is under 10 seconds . Prevent from showing 0:x and turn into 0:0X
+                        int minutes = Integer.parseInt(averageSeconds) / 60;
+                        int seconds = Integer.parseInt(averageSeconds) % 60;
+                        if (10 > seconds) {
                                 txtNewSongTime.setText(minutes + ":0" + seconds);
                         } else {
                                 txtNewSongTime.setText(minutes + ":" + seconds);
