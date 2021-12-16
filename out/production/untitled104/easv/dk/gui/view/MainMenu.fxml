@@ -62,8 +62,8 @@
         <columns>
           <TableColumn fx:id="colSongsTitle" minWidth="0.0" prefWidth="71.0" text="Title" />
           <TableColumn fx:id="colSongsArtist" prefWidth="51.0" text="Artist" />
-            <TableColumn prefWidth="52.0" text="Genre" />
-            <TableColumn minWidth="0.0" prefWidth="41.0" text="Time" />
+            <TableColumn fx:id="colSongsGenre" prefWidth="52.0" text="Genre" />
+            <TableColumn fx:id="colSongsTime" minWidth="0.0" prefWidth="41.0" text="Time" />
         </columns>
          <effect>
             <Glow />

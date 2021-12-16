@@ -1,64 +1,62 @@
 package easv.dk.be;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist{
-        private int id;
-        private String name;
-        private int totalSongs;
-        private int totalTime;
-        private List<Songs> songs = new ArrayList();
+public class Playlist {
+    private int id;
+    private String name;
+    private int totalSongs;
+    private int totalTime;
+    private List<Songs> songList;
 
-        public Playlist(int id, String name, int totalTime, int totalSongs) {
-            this.id = id;
-            this.name = name;
-            this.totalTime = totalTime;
-            this.totalSongs = totalSongs;
+    public Playlist(int totalSongs, int totalTime, String name, int id) {
+        this.id = id;
+        this.name = name;
+        this.totalTime = totalTime;
+        this.totalSongs = totalSongs;
 
-        }
+    }
 
-        public void addSongs(List<Songs> songs){
-            this.songs = songs;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public List<Songs> getAllSongsOnPlaylist(){
-            return songs;
-        }
+    public List<Songs> getSongList() {
+        return songList;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public void setSongList(List<Songs> songList) {
+        this.songList = songList;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public int getSongCount() {
+        return totalSongs;
+    }
 
-        public void setName(String name){
-            this.name = name;
-        }
+    public void setTotalSongs(int totalSongs) {
+        this.totalSongs = totalSongs;
+    }
 
-        public int getTotalSongs() {
-            return totalSongs;
-        }
+    public int getTotalTime() {
+        return totalTime;
+    }
 
-        public void setTotalSongs(int totalSongs) {
-            this.totalSongs = totalSongs;
-        }
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
 
-        public String getTotalTime() {
-            int seconds = (int) (totalTime / 1000) % 60 ;
-            int minutes = (int) ((totalTime / (1000*60)) % 60);
-            int hours   = (int) ((totalTime / (1000*60*60)) % 24);
-            return hours+":"+minutes+":"+seconds;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public void setTotalTime(int totalTime) {
-            this.totalTime = totalTime;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        @Override
-        public String toString() {
-            return name;
-        }
+    @Override
+    public String toString() {
+        return " Name=" + name + "Total song count =" + totalSongs + ", Total play Time=" + totalTime;
+    }
+
 }
+

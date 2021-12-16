@@ -11,8 +11,8 @@ public class TestingClass {
 
     public static void deletesong() {
         SongDAO_DB db = new SongDAO_DB();
-        Songs s = new Songs(1, "Antes muerta que sencilla","María Isabel", "lameo2","2.32", "oleoleloscaracole.com");
-        db.deleteSongs(s);
+        Songs s = new Songs("mira intelij","tecojoytereviento","yluegoatumadre",3,"aveono",1);
+        db.deleteSong(s);
 
     }
 

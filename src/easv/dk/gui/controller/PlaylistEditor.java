@@ -1,12 +1,20 @@
 package easv.dk.gui.controller;
+import easv.dk.bll.BllFacade;
+import easv.dk.bll.BllManager;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class PlaylistEditor {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PlaylistEditor implements Initializable {
+        BllManager bll = new BllManager();
 
     @FXML
     private Button cancelNewPlaylist;
@@ -17,6 +25,9 @@ public class PlaylistEditor {
     @FXML
     private Button CloseBotton;
 
+    public PlaylistEditor() throws IOException {
+    }
+
     @FXML
     public void cancelPlaylist(ActionEvent actionEvent) {
         Stage stage = (Stage) CloseBotton.getScene().getWindow();
@@ -24,7 +35,11 @@ public class PlaylistEditor {
     }
 
     public void saveNewPlaylist(ActionEvent actionEvent) {
+        }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
-
-
 }
+

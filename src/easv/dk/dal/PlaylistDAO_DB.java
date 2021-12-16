@@ -11,13 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PlaylistDAO_DB {
-
+    SongsOnPlaylistDAO_DB PlaylistSongInfo = new SongsOnPlaylistDAO_DB();
     private static MyDatabaseConnector databaseConnector;
     public PlaylistDAO_DB() {
         databaseConnector = new MyDatabaseConnector();
     }
 
-    public static List<Playlist> getAllSongs() throws SQLException {
+    public List<Playlist> getAllPlaylists() throws SQLException {
         ArrayList<Playlist> allPlaylist = new ArrayList<>();
         String sql = "SELECT * FROM Playlist;";
 
@@ -31,8 +31,7 @@ public class PlaylistDAO_DB {
                     String Name = resultSet.getString("Name");
                     int TotalTime = resultSet.getInt("TotalTime");
                     int TotalSongs = resultSet.getInt("TotalSongs");
-
-                    Playlist playlist = new Playlist(id,Name, TotalTime, TotalSongs);
+                    Playlist playlist = new Playlist(0,0,Name,getNewestPlaylist()) ;
                     allPlaylist.add(playlist);
                 }
 
@@ -41,32 +40,34 @@ public class PlaylistDAO_DB {
         return allPlaylist;
     }
 
-    public void createPlaylist(Playlist playlist) {
-        String sql = "INSERT INTO Playlist (name) values (?)";
-        try ( Connection con = databaseConnector.getConnection()) {
-            PreparedStatement p = con.prepareStatement(sql);
-            p.setString(1, playlist.getName());
-            p.executeUpdate();
-
-        } catch (SQLServerException throwables) {
-            throwables.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+    public Playlist createPlaylist(String name) {
+        String sql = "INSERT INTO Playlist(name) VALUES (?)";
+        try (Connection con = databaseConnector.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.addBatch();
+            ps.executeBatch();
+        } catch (SQLServerException ex) {
+            System.out.println(ex);
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
+        Playlist playlist = new Playlist(0,0,name,getNewestPlaylist()) ;
+        return playlist;
     }
-    public void editPlaylist (Playlist playlist){
-    String sql = "UPDATE Playlist SET name=? WHERE id=?";
-    try (Connection con = databaseConnector.getConnection()){
-        PreparedStatement p = con.prepareStatement(sql);
-        p.setString(1,playlist.getName());
-        p.setInt(2, playlist.getId());
-        p.executeUpdate();
 
-    } catch (SQLServerException throwables) {
-        throwables.printStackTrace();
-    } catch (SQLException throwables) {
-        throwables.printStackTrace();
-    }
+
+    public void editPlaylist (Playlist selectedItem, String name){
+    String sql = "UPDATE Playlist SET name=? WHERE id=?";
+        try (Connection con = databaseConnector.getConnection()) {
+            String query = "UPDATE Playlist set name = ? WHERE id = ?";
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setString(1, name);
+            preparedStmt.setInt(2, selectedItem.getId());
+            preparedStmt.executeUpdate();
+        } catch (SQLServerException ex) {
+        } catch (SQLException ex) {
+        }
     }
 
     public void deletePlaylist (Playlist playlist){
@@ -82,4 +83,30 @@ public class PlaylistDAO_DB {
             throwables.printStackTrace();
         }
     }
+    private String countTotalTime(List<Songs> allSongs) {
+        String totalTime = String.valueOf(0);
+        for (Songs allSong : allSongs) {
+            totalTime += allSong.getTime();
+        }
+        return totalTime;
     }
+
+    private int getNewestPlaylist() {
+        int newestID = -1;
+        try (Connection con = databaseConnector.getConnection()) {
+            String query = "SELECT TOP(1) * FROM Playlist ORDER by id desc";
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            ResultSet rs = preparedStmt.executeQuery();
+            while (rs.next()) {
+                newestID = rs.getInt("id");
+            }
+            return newestID;
+        } catch (SQLServerException ex) {
+            return newestID;
+        } catch (SQLException ex) {
+            return newestID;
+        }
+    }
+
+
+}

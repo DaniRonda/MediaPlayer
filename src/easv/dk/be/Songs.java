@@ -3,23 +3,21 @@ package easv.dk.be;
 public class Songs {
         private int id;
         private String title;
+        private int IDinList = 0;
+        private String artist;
+        private String category;
+        private int time;
+        private String fileurl;
+        private int position;
 
-        public Songs(int id, String title, String artist, String category, String time, String fileurl) {
-                this.id = id;
+        public Songs(String title, String artist, String category, int time, String fileurl, int id) {
                 this.title = title;
                 this.artist = artist;
                 this.category = category;
                 this.time = time;
                 this.fileurl = fileurl;
+                this.id = id;
         }
-
-        private String artist;
-        private String category;
-        private String time;
-        private String fileurl;
-        private int position;
-
-
 
         public int getId() {
                 return id;
@@ -53,11 +51,11 @@ public class Songs {
                 this.category = category;
         }
 
-        public String getTime() {
+        public int getTime() {
                 return time;
         }
 
-        public void setTime(String time) {
+        public void setTime(int time) {
                 this.time = time;
         }
 
@@ -76,6 +74,11 @@ public class Songs {
         public void setPosition(int position) {
                 this.position = position;
         }
+
+        public int getIDinsideList() {return IDinList;}
+
+        public void setIDinsideList(int IDinsideList) {this.IDinList = IDinsideList;}
+
 
         @Override
         public String toString() {
